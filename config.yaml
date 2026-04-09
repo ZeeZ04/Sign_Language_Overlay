@@ -1,0 +1,28 @@
+# Sign Language Overlay Configuration
+
+language: asl  # asl, bsl, isl, auslan
+
+display:
+  position: bottom-right  # top-left, top-right, bottom-left, bottom-right
+  size: 200               # hand image size in pixels
+  background_opacity: 0.8
+  sign_duration_ms: 300   # milliseconds per letter (fallback if no timing)
+  transition: fade        # fade, cut, slide
+  transition_ms: 100      # transition duration in milliseconds
+
+whisper:
+  model_size: base        # tiny, base, small, medium, large
+
+expressions:
+  enabled: false          # show facial expression hints
+  font_size: 32
+
+realtime:
+  chunk_duration_ms: 3000 # audio chunk size for real-time transcription
+  sample_rate: 16000
+
+input:
+  subtitle_path: ""       # path to SRT/VTT file
+
+assets:
+  base_directory: assets/signs  # base directory for all language assets

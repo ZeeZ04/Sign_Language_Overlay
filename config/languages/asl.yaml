@@ -1,0 +1,7 @@
+# American Sign Language configuration
+code: asl
+name: American Sign Language
+alphabet_count: 26
+has_two_handed_alphabet: false
+has_numbers: true
+notes: One-handed fingerspelling alphabet

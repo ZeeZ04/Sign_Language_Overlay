@@ -1,0 +1,22 @@
+pygame>=2.5.0
+pysrt>=1.1.2
+webvtt-py>=0.4.6
+PyYAML>=6.0
+Pillow>=10.0.0
+numpy>=1.24.0
+scipy>=1.10.0
+
+# Phase 2 - Speech-to-text (optional, install for audio/video support)
+# openai-whisper>=20231117
+# torch>=2.0.0
+# torchaudio>=2.0.0
+
+# Phase 3 - Screen capture
+mss>=9.0.0
+
+# Phase 3 - Optional
+# sounddevice>=0.4.6      # Real-time audio capture
+# opencv-python>=4.8.0    # Video overlay compositing
+# moderngl>=5.8.0         # Future: full 3D rendering
+# pyrr>=0.10.3            # Future: 3D math
+# PyOpenGL>=3.1.7         # Future: OpenGL bindings

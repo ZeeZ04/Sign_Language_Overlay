@@ -1,0 +1,7 @@
+# British Sign Language configuration
+code: bsl
+name: British Sign Language
+alphabet_count: 26
+has_two_handed_alphabet: true
+has_numbers: true
+notes: Two-handed fingerspelling alphabet

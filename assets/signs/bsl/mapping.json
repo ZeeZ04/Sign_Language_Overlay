@@ -1,0 +1,167 @@
+{
+  "alphabet": {
+    "a": {
+      "file": "alphabet/a.png",
+      "duration_ms": 350
+    },
+    "b": {
+      "file": "alphabet/b.png",
+      "duration_ms": 350
+    },
+    "c": {
+      "file": "alphabet/c.png",
+      "duration_ms": 350
+    },
+    "d": {
+      "file": "alphabet/d.png",
+      "duration_ms": 350
+    },
+    "e": {
+      "file": "alphabet/e.png",
+      "duration_ms": 350
+    },
+    "f": {
+      "file": "alphabet/f.png",
+      "duration_ms": 350
+    },
+    "g": {
+      "file": "alphabet/g.png",
+      "duration_ms": 350
+    },
+    "h": {
+      "file": "alphabet/h.png",
+      "duration_ms": 350
+    },
+    "i": {
+      "file": "alphabet/i.png",
+      "duration_ms": 350
+    },
+    "j": {
+      "file": "alphabet/j.png",
+      "duration_ms": 350
+    },
+    "k": {
+      "file": "alphabet/k.png",
+      "duration_ms": 350
+    },
+    "l": {
+      "file": "alphabet/l.png",
+      "duration_ms": 350
+    },
+    "m": {
+      "file": "alphabet/m.png",
+      "duration_ms": 350
+    },
+    "n": {
+      "file": "alphabet/n.png",
+      "duration_ms": 350
+    },
+    "o": {
+      "file": "alphabet/o.png",
+      "duration_ms": 350
+    },
+    "p": {
+      "file": "alphabet/p.png",
+      "duration_ms": 350
+    },
+    "q": {
+      "file": "alphabet/q.png",
+      "duration_ms": 350
+    },
+    "r": {
+      "file": "alphabet/r.png",
+      "duration_ms": 350
+    },
+    "s": {
+      "file": "alphabet/s.png",
+      "duration_ms": 350
+    },
+    "t": {
+      "file": "alphabet/t.png",
+      "duration_ms": 350
+    },
+    "u": {
+      "file": "alphabet/u.png",
+      "duration_ms": 350
+    },
+    "v": {
+      "file": "alphabet/v.png",
+      "duration_ms": 350
+    },
+    "w": {
+      "file": "alphabet/w.png",
+      "duration_ms": 350
+    },
+    "x": {
+      "file": "alphabet/x.png",
+      "duration_ms": 350
+    },
+    "y": {
+      "file": "alphabet/y.png",
+      "duration_ms": 350
+    },
+    "z": {
+      "file": "alphabet/z.png",
+      "duration_ms": 350
+    }
+  },
+  "numbers": {
+    "0": {
+      "file": "numbers/0.png",
+      "duration_ms": 400
+    },
+    "1": {
+      "file": "numbers/1.png",
+      "duration_ms": 400
+    },
+    "2": {
+      "file": "numbers/2.png",
+      "duration_ms": 400
+    },
+    "3": {
+      "file": "numbers/3.png",
+      "duration_ms": 400
+    },
+    "4": {
+      "file": "numbers/4.png",
+      "duration_ms": 400
+    },
+    "5": {
+      "file": "numbers/5.png",
+      "duration_ms": 400
+    },
+    "6": {
+      "file": "numbers/6.png",
+      "duration_ms": 400
+    },
+    "7": {
+      "file": "numbers/7.png",
+      "duration_ms": 400
+    },
+    "8": {
+      "file": "numbers/8.png",
+      "duration_ms": 400
+    },
+    "9": {
+      "file": "numbers/9.png",
+      "duration_ms": 400
+    }
+  },
+  "words": {},
+  "special": {
+    "space": {
+      "file": null,
+      "duration_ms": 200
+    },
+    "unknown": {
+      "file": "alphabet/a.png",
+      "duration_ms": 250
+    }
+  },
+  "meta": {
+    "language": "bsl",
+    "name": "British Sign Language",
+    "two_handed": true,
+    "notes": "BSL uses a two-handed alphabet. These are placeholders."
+  }
+}
