@@ -23,6 +23,7 @@ from src.timing_controller import TimingController
 from src.animation_controller import AnimationController
 from src.language_manager import LanguageManager
 from src.expression_overlay import ExpressionOverlay
+from src.grammar_transformer import ASLGrammarTransformer
 
 logger = logging.getLogger(__name__)
 
@@ -67,6 +68,11 @@ def parse_args() -> argparse.Namespace:
         "--list-languages",
         action="store_true",
         help="List available sign languages and exit",
+    )
+    input_group.add_argument(
+        "--settings",
+        action="store_true",
+        help="Open settings GUI",
     )
 
     # Language
@@ -134,6 +140,11 @@ def parse_args() -> argparse.Namespace:
         help="Start time in seconds",
     )
     parser.add_argument(
+        "--profile",
+        action="store_true",
+        help="Enable performance profiling",
+    )
+    parser.add_argument(
         "-v", "--verbose",
         action="store_true",
         help="Enable debug logging",
@@ -197,6 +208,13 @@ def main() -> None:
         list_languages(base_assets)
         sys.exit(0)
 
+    # Handle --settings
+    if args.settings:
+        from src.settings_gui import SettingsGUI
+        gui = SettingsGUI(config_path=str(Path(args.config) if args.config else DEFAULT_CONFIG))
+        gui.show()
+        sys.exit(0)
+
     # CLI overrides
     language_code = args.language or config.get("language", "asl")
     position = args.position or display_cfg.get("position", "bottom-right")
@@ -243,6 +261,10 @@ def main() -> None:
     # Initialize converter
     converter = TextToSignConverter(language=language_code)
 
+    # Initialize grammar transformer
+    grammar = ASLGrammarTransformer(language=language_code)
+    logger.info("Grammar transformer enabled for %s", language_code)
+
     # Initialize word mapper (optional)
     word_mapper = None
     if args.use_word_signs:
@@ -257,6 +279,17 @@ def main() -> None:
     # Initialize renderer
     renderer = SignRenderer(assets_path=assets_dir, size=size)
     renderer.load_assets()
+
+    # Initialize 3D hand model (optional)
+    hand_model = None
+    if args.use_3d:
+        from src.hand_model_3d import HandModel3D
+        model_path = Path(assets_dir).parent.parent.parent / "models" / "hand"
+        hand_model = HandModel3D(model_path=model_path, size=(size, size))
+        if hand_model.load_model():
+            logger.info("3D hand model loaded with %d poses", len(hand_model.get_available_poses()))
+        else:
+            logger.warning("3D hand model has no poses, will render skeletal fallback")
 
     # Initialize animation controller
     animator = AnimationController(transition_ms=transition_ms, transition_type=transition_type)
@@ -275,11 +308,13 @@ def main() -> None:
         subtitles=subtitles,
         converter=converter,
         word_mapper=word_mapper,
+        grammar_transformer=grammar,
     )
     controller.start(start_time=args.start)
 
     # Main loop
-    _run_playback_loop(overlay, controller, renderer, animator, expr_overlay, subtitles)
+    _run_playback_loop(overlay, controller, renderer, animator, expr_overlay, subtitles,
+                       hand_model=hand_model)
 
 
 def _run_playback_loop(
@@ -289,6 +324,7 @@ def _run_playback_loop(
     animator: AnimationController,
     expr_overlay: ExpressionOverlay | None,
     subtitles: list[SubtitleEntry],
+    hand_model: object | None = None,
 ) -> None:
     clock = pygame.time.Clock()
     fps = 60
@@ -326,7 +362,11 @@ def _run_playback_loop(
             current_sign_id = sign_token.sign_id if sign_token else None
 
             if current_sign_id != last_sign_id:
-                surface = renderer.get_sign_surface(sign_token.sign_id) if sign_token else None
+                if hand_model is not None and sign_token:
+                    hand_model.set_pose(sign_token.sign_id)
+                    surface = hand_model.render_skeletal() or renderer.get_sign_surface(sign_token.sign_id)
+                else:
+                    surface = renderer.get_sign_surface(sign_token.sign_id) if sign_token else None
                 animator.set_sign(surface)
                 last_sign_id = current_sign_id
 
@@ -392,6 +432,7 @@ def _run_realtime(
     # Initialize pygame and renderer
     pygame.init()
     converter = TextToSignConverter(language=lang_manager.current_language.code)
+    grammar = ASLGrammarTransformer(language=lang_manager.current_language.code)
     renderer = SignRenderer(assets_path=assets_dir, size=size)
     renderer.load_assets()
     animator = AnimationController(transition_ms=transition_ms, transition_type=transition_type)
@@ -407,6 +448,11 @@ def _run_realtime(
     clock = pygame.time.Clock()
     fps = 30
     last_text = None
+
+    # Multi-sign scheduling for real-time mode
+    rt_tokens: list = []
+    rt_token_idx = 0
+    rt_token_elapsed_ms = 0.0
 
     logger.info("Listening... Press Q or close window to quit.")
 
@@ -427,16 +473,31 @@ def _run_realtime(
                 last_text = text
                 logger.info("Heard: %s", text)
 
-                # Convert to signs and show
-                tokens = converter.convert(text)
-                if tokens:
-                    surface = renderer.get_sign_surface(tokens[0].sign_id)
+                # Apply grammar transformation and convert to signs
+                transformed = grammar.transform(text)
+                rt_tokens = converter.convert(transformed.text)
+                rt_token_idx = 0
+                rt_token_elapsed_ms = 0.0
+
+                if rt_tokens:
+                    surface = renderer.get_sign_surface(rt_tokens[0].sign_id)
                     animator.set_sign(surface)
 
                 if expr_overlay:
                     hint = expr_overlay.infer_expression(text)
                     if hint:
                         expr_overlay.set_expression(hint)
+
+            # Advance through token sequence based on duration
+            if rt_tokens and rt_token_idx < len(rt_tokens):
+                rt_token_elapsed_ms += float(dt_ms)
+                current_duration = rt_tokens[rt_token_idx].duration_ms
+                if rt_token_elapsed_ms >= current_duration:
+                    rt_token_elapsed_ms -= current_duration
+                    rt_token_idx += 1
+                    if rt_token_idx < len(rt_tokens):
+                        surface = renderer.get_sign_surface(rt_tokens[rt_token_idx].sign_id)
+                        animator.set_sign(surface)
 
             animator.update(float(dt_ms))
             if expr_overlay:

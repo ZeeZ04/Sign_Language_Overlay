@@ -10,6 +10,7 @@ from .subtitle_parser import SubtitleEntry
 from .text_to_sign import SignToken, TextToSignConverter
 
 if TYPE_CHECKING:
+    from .grammar_transformer import ASLGrammarTransformer
     from .word_sign_mapper import WordSignMapper
 
 logger = logging.getLogger(__name__)
@@ -31,10 +32,12 @@ class TimingController:
         subtitles: list[SubtitleEntry],
         converter: TextToSignConverter,
         word_mapper: WordSignMapper | None = None,
+        grammar_transformer: ASLGrammarTransformer | None = None,
     ) -> None:
         self.subtitles = subtitles
         self.converter = converter
         self.word_mapper = word_mapper
+        self.grammar_transformer = grammar_transformer
         self._schedule: list[ScheduledSign] = []
         self._current_time: float = 0.0
         self._playing: bool = False
@@ -128,6 +131,11 @@ class TimingController:
         logger.info("Built schedule with %d signs from %d subtitles", len(self._schedule), len(self.subtitles))
 
     def _convert_entry(self, text: str) -> list[SignToken]:
+        # Apply ASL grammar transformation if available
+        if self.grammar_transformer is not None:
+            result = self.grammar_transformer.transform(text)
+            text = result.text
+
         if self.word_mapper is not None:
             sequences = self.word_mapper.map_text(text)
             tokens: list[SignToken] = []

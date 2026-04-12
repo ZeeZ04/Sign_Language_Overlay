@@ -87,6 +87,26 @@ class SkeletalAnimator:
     def clear_queue(self) -> None:
         self.transition_queue.clear()
 
+    @staticmethod
+    def interpolate_joint_angles(
+        from_angles: dict[str, tuple[float, float, float]],
+        to_angles: dict[str, tuple[float, float, float]],
+        t: float,
+    ) -> dict[str, tuple[float, float, float]]:
+        """Linearly interpolate between two sets of joint angles."""
+        all_keys = set(from_angles.keys()) | set(to_angles.keys())
+        result: dict[str, tuple[float, float, float]] = {}
+        zero = (0.0, 0.0, 0.0)
+        for key in all_keys:
+            fa = from_angles.get(key, zero)
+            ta = to_angles.get(key, zero)
+            result[key] = (
+                fa[0] + (ta[0] - fa[0]) * t,
+                fa[1] + (ta[1] - fa[1]) * t,
+                fa[2] + (ta[2] - fa[2]) * t,
+            )
+        return result
+
     def _blend_surfaces(self, from_surf: pygame.Surface | None,
                         to_surf: pygame.Surface | None,
                         t: float) -> pygame.Surface | None:

@@ -69,7 +69,7 @@ class TestWordSignMapper:
 
     def test_get_available_words(self) -> None:
         words = self.mapper.get_available_words()
-        assert len(words) == 50
+        assert len(words) >= 50  # 50 original + ASL-LEX expansion
         assert "hello" in words
         assert "goodbye" in words
 
