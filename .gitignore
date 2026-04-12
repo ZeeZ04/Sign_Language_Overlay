@@ -82,3 +82,4 @@ config.local.yaml
 
 # Test outputs
 test_output/
+.claude/
