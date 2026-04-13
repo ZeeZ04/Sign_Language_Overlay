@@ -12,18 +12,19 @@ import logging
 import sys
 from pathlib import Path
 
-import yaml
 import pygame
+import yaml
 
-from src.subtitle_parser import SubtitleParser, SubtitleEntry
-from src.text_to_sign import TextToSignConverter
-from src.sign_renderer import SignRenderer
-from src.overlay_window import OverlayWindow
-from src.timing_controller import TimingController
 from src.animation_controller import AnimationController
-from src.language_manager import LanguageManager
 from src.expression_overlay import ExpressionOverlay
 from src.grammar_transformer import ASLGrammarTransformer
+from src.language_manager import LanguageManager
+from src.overlay_window import OverlayWindow
+from src.performance_monitor import PerformanceMonitor
+from src.sign_renderer import SignRenderer
+from src.subtitle_parser import SubtitleEntry, SubtitleParser
+from src.text_to_sign import TextToSignConverter
+from src.timing_controller import TimingController
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +36,7 @@ def load_config(config_path: str | None = None) -> dict:
     if not path.exists():
         logger.warning("Config file not found: %s. Using defaults.", path)
         return {}
-    with open(path, "r") as f:
+    with open(path) as f:
         return yaml.safe_load(f) or {}
 
 
@@ -231,11 +232,17 @@ def main() -> None:
     assets_dir = str(lang_config.assets_path)
     logger.info("Using language: %s (%s)", lang_config.name, lang_config.code)
 
+    # Initialize performance monitor
+    perf_monitor = PerformanceMonitor() if args.profile else None
+
     # Handle --realtime mode
     if args.realtime:
         _run_realtime(
             lang_manager, assets_dir, size, position, opacity,
             transition_type, transition_ms, whisper_model, show_expressions,
+            perf_monitor=perf_monitor,
+            use_3d=args.use_3d,
+            use_word_signs=args.use_word_signs,
         )
         return
 
@@ -282,14 +289,18 @@ def main() -> None:
 
     # Initialize 3D hand model (optional)
     hand_model = None
+    pose_interpolator = None
     if args.use_3d:
         from src.hand_model_3d import HandModel3D
+        from src.skeletal_animation import PoseInterpolator
+
         model_path = Path(assets_dir).parent.parent.parent / "models" / "hand"
         hand_model = HandModel3D(model_path=model_path, size=(size, size))
         if hand_model.load_model():
             logger.info("3D hand model loaded with %d poses", len(hand_model.get_available_poses()))
         else:
             logger.warning("3D hand model has no poses, will render skeletal fallback")
+        pose_interpolator = PoseInterpolator(hand_model, transition_ms=transition_ms)
 
     # Initialize animation controller
     animator = AnimationController(transition_ms=transition_ms, transition_type=transition_type)
@@ -314,7 +325,8 @@ def main() -> None:
 
     # Main loop
     _run_playback_loop(overlay, controller, renderer, animator, expr_overlay, subtitles,
-                       hand_model=hand_model)
+                       hand_model=hand_model, pose_interpolator=pose_interpolator,
+                       perf_monitor=perf_monitor)
 
 
 def _run_playback_loop(
@@ -325,17 +337,24 @@ def _run_playback_loop(
     expr_overlay: ExpressionOverlay | None,
     subtitles: list[SubtitleEntry],
     hand_model: object | None = None,
+    pose_interpolator: object | None = None,
+    perf_monitor: PerformanceMonitor | None = None,
 ) -> None:
     clock = pygame.time.Clock()
     fps = 60
     last_sign_id = None
     last_subtitle_idx = -1
 
+    import time as _time
+
     logger.info("Starting playback... Press Q or close window to quit.")
     logger.info("Press SPACE to pause/resume, LEFT/RIGHT arrows to seek.")
 
     try:
         while overlay.is_running:
+            if perf_monitor:
+                perf_monitor.start_frame()
+
             dt = clock.tick(fps) / 1000.0
             dt_ms = dt * 1000.0
 
@@ -362,13 +381,34 @@ def _run_playback_loop(
             current_sign_id = sign_token.sign_id if sign_token else None
 
             if current_sign_id != last_sign_id:
-                if hand_model is not None and sign_token:
+                _lookup_start = _time.perf_counter()
+                if pose_interpolator is not None and hand_model is not None and sign_token:
+                    # Use PoseInterpolator for smooth skeletal transitions
+                    pose = hand_model.get_pose(sign_token.sign_id)
+                    if pose:
+                        pose_interpolator.queue_pose_transition(pose)
+                    else:
+                        # No 3D pose available, fall back to 2D image
+                        surface = renderer.get_sign_surface(sign_token.sign_id)
+                        animator.set_sign(surface)
+                elif hand_model is not None and sign_token:
                     hand_model.set_pose(sign_token.sign_id)
                     surface = hand_model.render_skeletal() or renderer.get_sign_surface(sign_token.sign_id)
+                    animator.set_sign(surface)
                 else:
                     surface = renderer.get_sign_surface(sign_token.sign_id) if sign_token else None
-                animator.set_sign(surface)
+                    animator.set_sign(surface)
+                if perf_monitor:
+                    perf_monitor.record_sign_lookup((_time.perf_counter() - _lookup_start) * 1000)
                 last_sign_id = current_sign_id
+
+            _render_start = _time.perf_counter()
+
+            # Update pose interpolator (renders intermediate frames)
+            if pose_interpolator is not None:
+                interp_frame = pose_interpolator.update(dt_ms)
+                if interp_frame is not None:
+                    animator.set_sign(interp_frame)
 
             animator.update(dt_ms)
             frame = animator.get_current_frame()
@@ -393,6 +433,11 @@ def _run_playback_loop(
             overlay.update(frame)
             overlay.render_frame()
 
+            if perf_monitor:
+                perf_monitor.record_render_time((_time.perf_counter() - _render_start) * 1000)
+                perf_monitor.end_frame()
+                perf_monitor.update()
+
             if controller.current_time > controller.total_duration and controller.total_duration > 0:
                 logger.info("Playback complete.")
                 overlay.stop()
@@ -400,6 +445,12 @@ def _run_playback_loop(
     except KeyboardInterrupt:
         logger.info("Interrupted by user.")
     finally:
+        if perf_monitor:
+            summary = perf_monitor.get_summary()
+            logger.info(
+                "Final perf: %d frames | p95 %.1f ms | %d over budget",
+                summary["frame_count"], summary["p95_frame_ms"], summary["over_budget_count"],
+            )
         pygame.quit()
         logger.info("Overlay closed.")
 
@@ -414,8 +465,13 @@ def _run_realtime(
     transition_ms: int,
     whisper_model: str,
     show_expressions: bool,
+    perf_monitor: PerformanceMonitor | None = None,
+    use_3d: bool = False,
+    use_word_signs: bool = False,
 ) -> None:
     """Run in real-time microphone mode."""
+    import time as _time
+
     from src.realtime_audio import RealtimeAudio, RealtimeTranscriber
     from src.speech_to_text import SpeechToText
 
@@ -431,8 +487,9 @@ def _run_realtime(
 
     # Initialize pygame and renderer
     pygame.init()
-    converter = TextToSignConverter(language=lang_manager.current_language.code)
-    grammar = ASLGrammarTransformer(language=lang_manager.current_language.code)
+    language_code = lang_manager.current_language.code
+    converter = TextToSignConverter(language=language_code)
+    grammar = ASLGrammarTransformer(language=language_code)
     renderer = SignRenderer(assets_path=assets_dir, size=size)
     renderer.load_assets()
     animator = AnimationController(transition_ms=transition_ms, transition_type=transition_type)
@@ -440,6 +497,29 @@ def _run_realtime(
     overlay.show()
 
     expr_overlay = ExpressionOverlay() if show_expressions else None
+
+    # Initialize word mapper (optional)
+    word_mapper = None
+    if use_word_signs:
+        from src.word_sign_mapper import WordSignMapper
+        word_mapper = WordSignMapper(assets_path=assets_dir, language=language_code)
+        word_mapper.load_word_signs()
+        logger.info("Realtime word signs enabled: %d words", len(word_mapper.get_available_words()))
+
+    # Initialize 3D hand model (optional)
+    hand_model = None
+    pose_interpolator = None
+    if use_3d:
+        from src.hand_model_3d import HandModel3D
+        from src.skeletal_animation import PoseInterpolator
+
+        model_path = Path(assets_dir).parent.parent.parent / "models" / "hand"
+        hand_model = HandModel3D(model_path=model_path, size=(size, size))
+        if hand_model.load_model():
+            logger.info("Realtime 3D hand model: %d poses", len(hand_model.get_available_poses()))
+        else:
+            logger.warning("Realtime 3D hand model has no poses, skeletal fallback")
+        pose_interpolator = PoseInterpolator(hand_model, transition_ms=transition_ms)
 
     # Start capture and transcription
     audio.start_capture()
@@ -458,6 +538,9 @@ def _run_realtime(
 
     try:
         while overlay.is_running:
+            if perf_monitor:
+                perf_monitor.start_frame()
+
             dt_ms = clock.tick(fps)
 
             for event in pygame.event.get():
@@ -470,23 +553,41 @@ def _run_realtime(
             # Check for new transcription
             text = transcriber.get_latest_text()
             if text and text != last_text:
+                _transcribe_start = _time.perf_counter()
                 last_text = text
                 logger.info("Heard: %s", text)
 
-                # Apply grammar transformation and convert to signs
+                # Apply grammar transformation
                 transformed = grammar.transform(text)
-                rt_tokens = converter.convert(transformed.text)
+
+                # Convert to sign tokens (word mapper or fingerspell)
+                if word_mapper is not None:
+                    sequences = word_mapper.map_text(transformed.text)
+                    rt_tokens = []
+                    for seq in sequences:
+                        rt_tokens.extend(seq.tokens)
+                else:
+                    rt_tokens = converter.convert(transformed.text)
+
                 rt_token_idx = 0
                 rt_token_elapsed_ms = 0.0
 
                 if rt_tokens:
-                    surface = renderer.get_sign_surface(rt_tokens[0].sign_id)
-                    animator.set_sign(surface)
+                    _rt_set_sign(
+                        rt_tokens[0], renderer, animator,
+                        hand_model, pose_interpolator,
+                    )
 
                 if expr_overlay:
                     hint = expr_overlay.infer_expression(text)
                     if hint:
                         expr_overlay.set_expression(hint)
+
+                if perf_monitor:
+                    perf_monitor.record_transcription(
+                        latency_ms=(_time.perf_counter() - _transcribe_start) * 1000,
+                        text_length=len(text),
+                    )
 
             # Advance through token sequence based on duration
             if rt_tokens and rt_token_idx < len(rt_tokens):
@@ -496,8 +597,18 @@ def _run_realtime(
                     rt_token_elapsed_ms -= current_duration
                     rt_token_idx += 1
                     if rt_token_idx < len(rt_tokens):
-                        surface = renderer.get_sign_surface(rt_tokens[rt_token_idx].sign_id)
-                        animator.set_sign(surface)
+                        _rt_set_sign(
+                            rt_tokens[rt_token_idx], renderer, animator,
+                            hand_model, pose_interpolator,
+                        )
+
+            _render_start = _time.perf_counter()
+
+            # Update pose interpolator (renders intermediate frames)
+            if pose_interpolator is not None:
+                interp_frame = pose_interpolator.update(float(dt_ms))
+                if interp_frame is not None:
+                    animator.set_sign(interp_frame)
 
             animator.update(float(dt_ms))
             if expr_overlay:
@@ -514,13 +625,43 @@ def _run_realtime(
             overlay.update(frame)
             overlay.render_frame()
 
+            if perf_monitor:
+                perf_monitor.record_render_time((_time.perf_counter() - _render_start) * 1000)
+                perf_monitor.end_frame()
+                perf_monitor.update()
+
     except KeyboardInterrupt:
         logger.info("Interrupted by user.")
     finally:
+        if perf_monitor:
+            summary = perf_monitor.get_summary()
+            logger.info(
+                "Final perf: %d frames | p95 %.1f ms | %d over budget | %d transcriptions",
+                summary["frame_count"], summary["p95_frame_ms"],
+                summary["over_budget_count"], summary["transcription_count"],
+            )
         transcriber.stop()
         audio.stop_capture()
         pygame.quit()
         logger.info("Real-time mode stopped.")
+
+
+def _rt_set_sign(
+    token: object,
+    renderer: SignRenderer,
+    animator: AnimationController,
+    hand_model: object | None,
+    pose_interpolator: object | None,
+) -> None:
+    """Set the current sign in realtime mode, with 3D support."""
+    if pose_interpolator is not None and hand_model is not None:
+        pose = hand_model.get_pose(token.sign_id)
+        if pose:
+            pose_interpolator.queue_pose_transition(pose)
+            return
+    # Fallback to 2D image
+    surface = renderer.get_sign_surface(token.sign_id)
+    animator.set_sign(surface)
 
 
 if __name__ == "__main__":

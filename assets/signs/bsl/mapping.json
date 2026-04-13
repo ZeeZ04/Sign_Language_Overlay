@@ -147,7 +147,1138 @@
       "duration_ms": 400
     }
   },
-  "words": {},
+  "words": {
+    "hello": {
+      "file": "words/hello.png",
+      "duration_ms": 500,
+      "category": "greeting",
+      "priority": true,
+      "source": "curated"
+    },
+    "goodbye": {
+      "file": "words/goodbye.png",
+      "duration_ms": 600,
+      "category": "greeting",
+      "priority": true,
+      "source": "curated"
+    },
+    "please": {
+      "file": "words/please.png",
+      "duration_ms": 500,
+      "category": "social",
+      "priority": true,
+      "source": "curated"
+    },
+    "thank_you": {
+      "file": "words/thank_you.png",
+      "duration_ms": 600,
+      "category": "social",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "thanks"
+      ]
+    },
+    "sorry": {
+      "file": "words/sorry.png",
+      "duration_ms": 500,
+      "category": "social",
+      "priority": true,
+      "source": "curated"
+    },
+    "welcome": {
+      "file": "words/welcome.png",
+      "duration_ms": 500,
+      "category": "social",
+      "priority": true,
+      "source": "curated"
+    },
+    "yes": {
+      "file": "words/yes.png",
+      "duration_ms": 400,
+      "category": "social",
+      "priority": true,
+      "source": "curated"
+    },
+    "no": {
+      "file": "words/no.png",
+      "duration_ms": 400,
+      "category": "social",
+      "priority": true,
+      "source": "curated"
+    },
+    "i": {
+      "file": "words/i.png",
+      "duration_ms": 300,
+      "category": "pronoun",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "me"
+      ]
+    },
+    "you": {
+      "file": "words/you.png",
+      "duration_ms": 300,
+      "category": "pronoun",
+      "priority": true,
+      "source": "curated"
+    },
+    "he": {
+      "file": "words/he.png",
+      "duration_ms": 300,
+      "category": "pronoun",
+      "priority": true,
+      "source": "curated"
+    },
+    "she": {
+      "file": "words/she.png",
+      "duration_ms": 300,
+      "category": "pronoun",
+      "priority": true,
+      "source": "curated"
+    },
+    "we": {
+      "file": "words/we.png",
+      "duration_ms": 300,
+      "category": "pronoun",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "us"
+      ]
+    },
+    "they": {
+      "file": "words/they.png",
+      "duration_ms": 300,
+      "category": "pronoun",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "them"
+      ]
+    },
+    "want": {
+      "file": "words/want.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "need": {
+      "file": "words/need.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "like": {
+      "file": "words/like.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "love": {
+      "file": "words/love.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "know": {
+      "file": "words/know.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "think": {
+      "file": "words/think.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "go": {
+      "file": "words/go.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "come": {
+      "file": "words/come.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "eat": {
+      "file": "words/eat.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "drink": {
+      "file": "words/drink.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "sleep": {
+      "file": "words/sleep.png",
+      "duration_ms": 600,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "work": {
+      "file": "words/work.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "help": {
+      "file": "words/help.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "give": {
+      "file": "words/give.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "see": {
+      "file": "words/see.png",
+      "duration_ms": 400,
+      "category": "verb",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "look"
+      ]
+    },
+    "hear": {
+      "file": "words/hear.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "listen"
+      ]
+    },
+    "say": {
+      "file": "words/say.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "tell"
+      ]
+    },
+    "learn": {
+      "file": "words/learn.png",
+      "duration_ms": 600,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "teach": {
+      "file": "words/teach.png",
+      "duration_ms": 600,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "understand": {
+      "file": "words/understand.png",
+      "duration_ms": 600,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "wait": {
+      "file": "words/wait.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "stop": {
+      "file": "words/stop.png",
+      "duration_ms": 400,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "start": {
+      "file": "words/start.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "begin"
+      ]
+    },
+    "finish": {
+      "file": "words/finish.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "done",
+        "end"
+      ]
+    },
+    "try": {
+      "file": "words/try.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "find": {
+      "file": "words/find.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "sit": {
+      "file": "words/sit.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "stand": {
+      "file": "words/stand.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "walk": {
+      "file": "words/walk.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "run": {
+      "file": "words/run.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "buy": {
+      "file": "words/buy.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "open": {
+      "file": "words/open.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "close": {
+      "file": "words/close.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "shut"
+      ]
+    },
+    "read": {
+      "file": "words/read.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "write": {
+      "file": "words/write.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "play": {
+      "file": "words/play.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "cook": {
+      "file": "words/cook.png",
+      "duration_ms": 600,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "clean": {
+      "file": "words/clean.png",
+      "duration_ms": 500,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "remember": {
+      "file": "words/remember.png",
+      "duration_ms": 600,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "forget": {
+      "file": "words/forget.png",
+      "duration_ms": 600,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "family": {
+      "file": "words/family.png",
+      "duration_ms": 600,
+      "category": "people",
+      "priority": true,
+      "source": "curated"
+    },
+    "mother": {
+      "file": "words/mother.png",
+      "duration_ms": 500,
+      "category": "people",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "mum",
+        "mom"
+      ]
+    },
+    "father": {
+      "file": "words/father.png",
+      "duration_ms": 500,
+      "category": "people",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "dad"
+      ]
+    },
+    "brother": {
+      "file": "words/brother.png",
+      "duration_ms": 500,
+      "category": "people",
+      "priority": true,
+      "source": "curated"
+    },
+    "sister": {
+      "file": "words/sister.png",
+      "duration_ms": 500,
+      "category": "people",
+      "priority": true,
+      "source": "curated"
+    },
+    "baby": {
+      "file": "words/baby.png",
+      "duration_ms": 500,
+      "category": "people",
+      "priority": true,
+      "source": "curated"
+    },
+    "friend": {
+      "file": "words/friend.png",
+      "duration_ms": 500,
+      "category": "people",
+      "priority": true,
+      "source": "curated"
+    },
+    "person": {
+      "file": "words/person.png",
+      "duration_ms": 500,
+      "category": "people",
+      "priority": true,
+      "source": "curated"
+    },
+    "man": {
+      "file": "words/man.png",
+      "duration_ms": 400,
+      "category": "people",
+      "priority": true,
+      "source": "curated"
+    },
+    "woman": {
+      "file": "words/woman.png",
+      "duration_ms": 400,
+      "category": "people",
+      "priority": true,
+      "source": "curated"
+    },
+    "child": {
+      "file": "words/child.png",
+      "duration_ms": 500,
+      "category": "people",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "kid"
+      ]
+    },
+    "boy": {
+      "file": "words/boy.png",
+      "duration_ms": 400,
+      "category": "people",
+      "priority": true,
+      "source": "curated"
+    },
+    "girl": {
+      "file": "words/girl.png",
+      "duration_ms": 400,
+      "category": "people",
+      "priority": true,
+      "source": "curated"
+    },
+    "teacher": {
+      "file": "words/teacher.png",
+      "duration_ms": 600,
+      "category": "people",
+      "priority": true,
+      "source": "curated"
+    },
+    "doctor": {
+      "file": "words/doctor.png",
+      "duration_ms": 600,
+      "category": "people",
+      "priority": true,
+      "source": "curated"
+    },
+    "house": {
+      "file": "words/house.png",
+      "duration_ms": 600,
+      "category": "place",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "home"
+      ]
+    },
+    "school": {
+      "file": "words/school.png",
+      "duration_ms": 500,
+      "category": "place",
+      "priority": true,
+      "source": "curated"
+    },
+    "hospital": {
+      "file": "words/hospital.png",
+      "duration_ms": 600,
+      "category": "place",
+      "priority": true,
+      "source": "curated"
+    },
+    "shop": {
+      "file": "words/shop.png",
+      "duration_ms": 500,
+      "category": "place",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "store"
+      ]
+    },
+    "food": {
+      "file": "words/food.png",
+      "duration_ms": 500,
+      "category": "object",
+      "priority": true,
+      "source": "curated"
+    },
+    "water": {
+      "file": "words/water.png",
+      "duration_ms": 500,
+      "category": "object",
+      "priority": true,
+      "source": "curated"
+    },
+    "coffee": {
+      "file": "words/coffee.png",
+      "duration_ms": 500,
+      "category": "object",
+      "priority": true,
+      "source": "curated"
+    },
+    "tea": {
+      "file": "words/tea.png",
+      "duration_ms": 500,
+      "category": "object",
+      "priority": true,
+      "source": "curated"
+    },
+    "book": {
+      "file": "words/book.png",
+      "duration_ms": 500,
+      "category": "object",
+      "priority": true,
+      "source": "curated"
+    },
+    "phone": {
+      "file": "words/phone.png",
+      "duration_ms": 500,
+      "category": "object",
+      "priority": true,
+      "source": "curated"
+    },
+    "computer": {
+      "file": "words/computer.png",
+      "duration_ms": 600,
+      "category": "object",
+      "priority": true,
+      "source": "curated"
+    },
+    "money": {
+      "file": "words/money.png",
+      "duration_ms": 500,
+      "category": "object",
+      "priority": true,
+      "source": "curated"
+    },
+    "car": {
+      "file": "words/car.png",
+      "duration_ms": 500,
+      "category": "object",
+      "priority": true,
+      "source": "curated"
+    },
+    "bus": {
+      "file": "words/bus.png",
+      "duration_ms": 500,
+      "category": "object",
+      "priority": true,
+      "source": "curated"
+    },
+    "door": {
+      "file": "words/door.png",
+      "duration_ms": 500,
+      "category": "object",
+      "priority": true,
+      "source": "curated"
+    },
+    "today": {
+      "file": "words/today.png",
+      "duration_ms": 500,
+      "category": "time",
+      "priority": true,
+      "source": "curated"
+    },
+    "tomorrow": {
+      "file": "words/tomorrow.png",
+      "duration_ms": 500,
+      "category": "time",
+      "priority": true,
+      "source": "curated"
+    },
+    "yesterday": {
+      "file": "words/yesterday.png",
+      "duration_ms": 500,
+      "category": "time",
+      "priority": true,
+      "source": "curated"
+    },
+    "morning": {
+      "file": "words/morning.png",
+      "duration_ms": 500,
+      "category": "time",
+      "priority": true,
+      "source": "curated"
+    },
+    "afternoon": {
+      "file": "words/afternoon.png",
+      "duration_ms": 500,
+      "category": "time",
+      "priority": true,
+      "source": "curated"
+    },
+    "evening": {
+      "file": "words/evening.png",
+      "duration_ms": 500,
+      "category": "time",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "night"
+      ]
+    },
+    "now": {
+      "file": "words/now.png",
+      "duration_ms": 400,
+      "category": "time",
+      "priority": true,
+      "source": "curated"
+    },
+    "later": {
+      "file": "words/later.png",
+      "duration_ms": 500,
+      "category": "time",
+      "priority": true,
+      "source": "curated"
+    },
+    "week": {
+      "file": "words/week.png",
+      "duration_ms": 500,
+      "category": "time",
+      "priority": true,
+      "source": "curated"
+    },
+    "month": {
+      "file": "words/month.png",
+      "duration_ms": 500,
+      "category": "time",
+      "priority": true,
+      "source": "curated"
+    },
+    "year": {
+      "file": "words/year.png",
+      "duration_ms": 500,
+      "category": "time",
+      "priority": true,
+      "source": "curated"
+    },
+    "good": {
+      "file": "words/good.png",
+      "duration_ms": 500,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated"
+    },
+    "bad": {
+      "file": "words/bad.png",
+      "duration_ms": 500,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated"
+    },
+    "big": {
+      "file": "words/big.png",
+      "duration_ms": 500,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "large"
+      ]
+    },
+    "small": {
+      "file": "words/small.png",
+      "duration_ms": 500,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "little"
+      ]
+    },
+    "hot": {
+      "file": "words/hot.png",
+      "duration_ms": 400,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated"
+    },
+    "cold": {
+      "file": "words/cold.png",
+      "duration_ms": 400,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated"
+    },
+    "new": {
+      "file": "words/new.png",
+      "duration_ms": 400,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated"
+    },
+    "old": {
+      "file": "words/old.png",
+      "duration_ms": 400,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated"
+    },
+    "happy": {
+      "file": "words/happy.png",
+      "duration_ms": 500,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated"
+    },
+    "sad": {
+      "file": "words/sad.png",
+      "duration_ms": 500,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated"
+    },
+    "angry": {
+      "file": "words/angry.png",
+      "duration_ms": 500,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated"
+    },
+    "tired": {
+      "file": "words/tired.png",
+      "duration_ms": 500,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated"
+    },
+    "sick": {
+      "file": "words/sick.png",
+      "duration_ms": 500,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "ill"
+      ]
+    },
+    "hungry": {
+      "file": "words/hungry.png",
+      "duration_ms": 500,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated"
+    },
+    "beautiful": {
+      "file": "words/beautiful.png",
+      "duration_ms": 600,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated"
+    },
+    "easy": {
+      "file": "words/easy.png",
+      "duration_ms": 400,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated"
+    },
+    "hard": {
+      "file": "words/hard.png",
+      "duration_ms": 400,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "difficult"
+      ]
+    },
+    "right": {
+      "file": "words/right.png",
+      "duration_ms": 400,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "correct"
+      ]
+    },
+    "wrong": {
+      "file": "words/wrong.png",
+      "duration_ms": 400,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated"
+    },
+    "same": {
+      "file": "words/same.png",
+      "duration_ms": 400,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated"
+    },
+    "different": {
+      "file": "words/different.png",
+      "duration_ms": 500,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated"
+    },
+    "important": {
+      "file": "words/important.png",
+      "duration_ms": 600,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated"
+    },
+    "red": {
+      "file": "words/red.png",
+      "duration_ms": 400,
+      "category": "color",
+      "priority": true,
+      "source": "curated"
+    },
+    "blue": {
+      "file": "words/blue.png",
+      "duration_ms": 400,
+      "category": "color",
+      "priority": true,
+      "source": "curated"
+    },
+    "green": {
+      "file": "words/green.png",
+      "duration_ms": 400,
+      "category": "color",
+      "priority": true,
+      "source": "curated"
+    },
+    "yellow": {
+      "file": "words/yellow.png",
+      "duration_ms": 400,
+      "category": "color",
+      "priority": true,
+      "source": "curated"
+    },
+    "black": {
+      "file": "words/black.png",
+      "duration_ms": 400,
+      "category": "color",
+      "priority": true,
+      "source": "curated"
+    },
+    "white": {
+      "file": "words/white.png",
+      "duration_ms": 400,
+      "category": "color",
+      "priority": true,
+      "source": "curated"
+    },
+    "what": {
+      "file": "words/what.png",
+      "duration_ms": 400,
+      "category": "question",
+      "priority": true,
+      "source": "curated"
+    },
+    "where": {
+      "file": "words/where.png",
+      "duration_ms": 400,
+      "category": "question",
+      "priority": true,
+      "source": "curated"
+    },
+    "when": {
+      "file": "words/when.png",
+      "duration_ms": 400,
+      "category": "question",
+      "priority": true,
+      "source": "curated"
+    },
+    "why": {
+      "file": "words/why.png",
+      "duration_ms": 400,
+      "category": "question",
+      "priority": true,
+      "source": "curated"
+    },
+    "how": {
+      "file": "words/how.png",
+      "duration_ms": 400,
+      "category": "question",
+      "priority": true,
+      "source": "curated"
+    },
+    "who": {
+      "file": "words/who.png",
+      "duration_ms": 400,
+      "category": "question",
+      "priority": true,
+      "source": "curated"
+    },
+    "more": {
+      "file": "words/more.png",
+      "duration_ms": 400,
+      "category": "other",
+      "priority": true,
+      "source": "curated"
+    },
+    "again": {
+      "file": "words/again.png",
+      "duration_ms": 500,
+      "category": "other",
+      "priority": true,
+      "source": "curated"
+    },
+    "enough": {
+      "file": "words/enough.png",
+      "duration_ms": 500,
+      "category": "other",
+      "priority": true,
+      "source": "curated"
+    },
+    "here": {
+      "file": "words/here.png",
+      "duration_ms": 400,
+      "category": "other",
+      "priority": true,
+      "source": "curated"
+    },
+    "there": {
+      "file": "words/there.png",
+      "duration_ms": 400,
+      "category": "other",
+      "priority": true,
+      "source": "curated"
+    },
+    "always": {
+      "file": "words/always.png",
+      "duration_ms": 500,
+      "category": "other",
+      "priority": true,
+      "source": "curated"
+    },
+    "never": {
+      "file": "words/never.png",
+      "duration_ms": 500,
+      "category": "other",
+      "priority": true,
+      "source": "curated"
+    },
+    "sometimes": {
+      "file": "words/sometimes.png",
+      "duration_ms": 600,
+      "category": "other",
+      "priority": true,
+      "source": "curated"
+    },
+    "maybe": {
+      "file": "words/maybe.png",
+      "duration_ms": 500,
+      "category": "other",
+      "priority": true,
+      "source": "curated"
+    },
+    "all": {
+      "file": "words/all.png",
+      "duration_ms": 400,
+      "category": "other",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "everything"
+      ]
+    },
+    "name": {
+      "file": "words/name.png",
+      "duration_ms": 500,
+      "category": "other",
+      "priority": true,
+      "source": "curated"
+    },
+    "brilliant": {
+      "file": "words/brilliant.png",
+      "duration_ms": 600,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "great"
+      ]
+    },
+    "rubbish": {
+      "file": "words/rubbish.png",
+      "duration_ms": 500,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated"
+    },
+    "toilet": {
+      "file": "words/toilet.png",
+      "duration_ms": 500,
+      "category": "place",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "loo"
+      ]
+    },
+    "holiday": {
+      "file": "words/holiday.png",
+      "duration_ms": 600,
+      "category": "time",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "vacation"
+      ]
+    },
+    "flat": {
+      "file": "words/flat.png",
+      "duration_ms": 500,
+      "category": "place",
+      "priority": true,
+      "source": "curated",
+      "variants": [
+        "apartment"
+      ]
+    },
+    "deaf": {
+      "file": "words/deaf.png",
+      "duration_ms": 400,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated"
+    },
+    "hearing": {
+      "file": "words/hearing.png",
+      "duration_ms": 500,
+      "category": "adjective",
+      "priority": true,
+      "source": "curated"
+    },
+    "sign": {
+      "file": "words/sign.png",
+      "duration_ms": 400,
+      "category": "verb",
+      "priority": true,
+      "source": "curated"
+    },
+    "language": {
+      "file": "words/language.png",
+      "duration_ms": 600,
+      "category": "noun",
+      "priority": true,
+      "source": "curated"
+    },
+    "interpreter": {
+      "file": "words/interpreter.png",
+      "duration_ms": 700,
+      "category": "people",
+      "priority": true,
+      "source": "curated"
+    }
+  },
   "special": {
     "space": {
       "file": null,

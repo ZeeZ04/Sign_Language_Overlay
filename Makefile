@@ -30,3 +30,4 @@ placeholders:
 	python scripts/generate_placeholders.py
 	python scripts/generate_word_placeholders.py
 	python scripts/generate_bsl_placeholders.py
+	python scripts/generate_multilang_placeholders.py
